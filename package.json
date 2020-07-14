@@ -1,0 +1,6 @@
+{
+	"name": "slack",
+	"dependencies": {
+		"@slack/web-api": "^5.10.0"
+	}
+}
