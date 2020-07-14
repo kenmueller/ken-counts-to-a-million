@@ -10,7 +10,7 @@ const sleep = ms =>
 const sanitize = str =>
 	str
 		.replace(/@(channel|everyone|here)/ig, '@\u200c$1')
-		.replace(/\<\!(channel|everyone|here)\>/ig, '<\u200c!$1|$2>')
+		.replace(/\<\!(channel|everyone|here)\|(.*?)\>/ig, '<\u200c!$1|$2>')
 
 const sendMessage = (i, messages, queue) => {
 	let message = messages[i]
