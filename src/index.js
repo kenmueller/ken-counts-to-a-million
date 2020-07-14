@@ -1,6 +1,7 @@
 const { join } = require('path')
 const express = require('express')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 const handlebars = require('express-handlebars')
 
 const { sleep, sendMessage } = require('./utils')
@@ -23,6 +24,7 @@ const start = async () => {
 }
 
 app.use(cors())
+app.use(bodyParser.json())
 
 app.engine('handlebars', handlebars())
 app.set('view engine', 'handlebars')
