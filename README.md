@@ -1,5 +1,5 @@
 # Ken counts to a million
 
-Secrets are held in `data.json`
-
-Start counting with `npm start`
+- `GET /current`: Returns the current value
+- `POST /start/:startingNumber`: Starts the counter
+- `POST /stop`: Stops the counter
