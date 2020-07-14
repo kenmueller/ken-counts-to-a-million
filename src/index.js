@@ -16,10 +16,17 @@ let i = null
 let ready = true
 
 const start = async () => {
-	for (; ready && i <= LAST_NUMBER; i++) {
-		await sendMessage(i, messages, queue)
-		console.log(i)
-		await sleep(SLEEP_DURATION)
+	while (ready && i <= LAST_NUMBER) {
+		try {
+			await sendMessage(i, messages, queue)
+			console.log(i)
+			await sleep(SLEEP_DURATION)
+			
+			i++
+		} catch (error) {
+			console.error(error)
+			continue
+		}
 	}
 }
 
