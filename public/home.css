@@ -120,6 +120,11 @@ button:disabled {
 	transition: color 0.3s, background 0.3s, opacity 0.3s;
 }
 
+.message-form-button:not(:disabled):hover {
+	color: #1da1f2;
+	background: white;
+}
+
 .message-form-button:disabled {
 	opacity: 0.5;
 }
