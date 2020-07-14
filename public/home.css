@@ -1,0 +1,100 @@
+*,
+::before,
+::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: Muli, Arial, Helvetica, sans-serif;
+	border: none;
+}
+
+html {
+	background: #051e34;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	padding: 30px;
+}
+
+button {
+	cursor: pointer;
+}
+
+button:disabled {
+	cursor: default;
+}
+
+#title,
+#status {
+	text-align: center;
+	font-weight: 900;
+}
+
+#title {
+	color: white;
+}
+
+#status {
+	margin-top: 30px;
+	color: #f3540b;
+}
+
+#status.ready {
+	color: #1da1f2;
+}
+
+.message-form {
+	margin-top: 30px;
+	color: white;
+}
+
+.message-form-title {
+	font-weight: 900;
+}
+
+.message-form-subtitle {
+	margin-top: 4px;
+	opacity: 0.5;
+}
+
+.message-form-body {
+	display: flex;
+	margin-top: 16px;
+}
+
+.message-form-input,
+.message-form-button {
+	line-height: 35px;
+	font-size: 16px;
+	color: white;
+	border-radius: 17.5px;
+	outline: none;
+}
+
+.message-form-input {
+	flex-grow: 1;
+	margin-right: 12px;
+	padding: 0 16px;
+	background: #f0f1f81a;
+}
+
+.message-form-input::placeholder {
+	color: white;
+	opacity: 0.5;
+}
+
+.message-form-button {
+	padding: 0 20px;
+	font-weight: 900;
+	background: #1da1f2;
+	transition: color 0.3s, background 0.3s, opacity 0.3s;
+}
+
+.message-form-button:disabled {
+	opacity: 0.5;
+}

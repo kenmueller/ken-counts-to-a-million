@@ -32,6 +32,7 @@ app.set('view engine', 'handlebars')
 app.get('/', (_, res) =>
 	res.render('home', {
 		layout: false,
+		ready,
 		current: i
 	})
 )

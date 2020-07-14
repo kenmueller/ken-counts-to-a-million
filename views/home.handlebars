@@ -2,10 +2,63 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Muli:wght@400;700;900&display=swap">
 		<link rel="stylesheet" href="/home.css">
 		<title>Ken Counts to a Million</title>
 	</head>
 	<body>
-		{{current}}
+		<h1 id="title">
+			Ken Counts to a Million
+		</h1>
+		<h2
+			id="status"
+			class="{{#if ready}}ready{{/if}}"
+		>
+			{{#if current}}
+				{{#if ready}}
+					{{current}}
+				{{else}}
+					Stopped at {{current}}
+				{{/if}}
+			{{else}}
+				Stopped
+			{{/if}}
+		</h2>
+		<div>
+			<form
+				id="add-message-form"
+				class="message-form"
+				onsubmit="addMessage(event)"
+			>
+				<h3 class="message-form-title">
+					Add Message to Queue
+				</h3>
+				<h4 class="message-form-subtitle">
+					Your message will be attached to the nearest available number
+				</h4>
+				<div class="message-form-body">
+					<input
+						class="message-form-input"
+						placeholder="Your message here..."
+					>
+					<button class="message-form-button" disabled>
+						Send
+					</button>
+				</div>
+			</form>
+			<form
+				id="claim-number-form"
+				class="message-form"
+				onsubmit="claimNumber(event)"
+			>
+				<h3 class="message-form-title">
+					Claim Number
+				</h3>
+				<h4 class="message-form-subtitle">
+					Your message will be attached to the specified number
+				</h4>
+			</form>
+		</div>
+		<script src="/home.js"></script>
 	</body>
 </html>
