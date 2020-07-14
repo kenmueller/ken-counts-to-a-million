@@ -38,7 +38,7 @@ app.get('/current', (_, res) =>
 	res.send(i === null ? 'Unknown' : i.toString())
 )
 
-app.post('/message', ({ body }, res) => {
+app.post('/messages', ({ body }, res) => {
 	if (typeof body !== 'object')
 		return res.status(400).send('The request body must be an object')
 	
