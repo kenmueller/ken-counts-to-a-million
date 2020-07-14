@@ -16,7 +16,7 @@ let ready = true
 
 const start = async () => {
 	for (; ready && i <= LAST_NUMBER; i++) {
-		await sendMessage(i)
+		await sendMessage(i, messages, queue)
 		console.log(i)
 		await sleep(SLEEP_DURATION)
 	}
