@@ -7,6 +7,11 @@ const slack = new WebClient(SLACK_TOKEN)
 const sleep = ms =>
 	new Promise(resolve => setTimeout(resolve, ms))
 
+const sanitize = str =>
+	str
+		.replace(/@(channel|everyone|here)/ig, '@\u200c$1')
+		.replace(/\<\!(channel|everyone|here)\|(.*?)\>/ig, '<\u200c!$1|$2>')
+
 const sendMessage = (i, messages, queue) => {
 	let message = messages[i]
 	
@@ -16,8 +21,8 @@ const sendMessage = (i, messages, queue) => {
 	
 	return slack.chat.postMessage({
 		channel: SLACK_CHANNEL,
-		text: `${i}${message ? ` - ${message}` : ''}`
+		text: `${i}${message ? ` - ${sanitize(message)}` : ''}`
 	})
 }
 
-module.exports = { sleep, sendMessage }
+module.exports = { sleep, sanitize, sendMessage }
