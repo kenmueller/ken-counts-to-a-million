@@ -24,7 +24,7 @@
 				Stopped
 			{{/if}}
 		</h2>
-		<div>
+		<div id="forms">
 			<form
 				id="add-message-form"
 				class="message-form"
@@ -33,15 +33,24 @@
 				<h3 class="message-form-title">
 					Add Message to Queue
 				</h3>
-				<h4 class="message-form-subtitle">
+				<h4
+					id="add-message-subtitle"
+					class="message-form-subtitle"
+				>
 					Your message will be attached to the nearest available number
 				</h4>
 				<div class="message-form-body">
 					<input
+						id="add-message-input"
 						class="message-form-input message-form-main-input"
 						placeholder="Message"
+						oninput="addMessageInputChanged(event.target.value)"
 					>
-					<button class="message-form-button" disabled>
+					<button
+						id="add-message-submit-button"
+						class="message-form-button"
+						disabled
+					>
 						Send
 					</button>
 				</div>

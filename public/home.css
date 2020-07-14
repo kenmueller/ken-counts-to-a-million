@@ -57,6 +57,11 @@ button:disabled {
 	color: #1da1f2;
 }
 
+#forms {
+	max-width: 500px;
+	width: 100%;
+}
+
 .message-form {
 	margin-top: 30px;
 	color: white;

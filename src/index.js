@@ -45,7 +45,7 @@ app.post('/messages', ({ body }, res) => {
 	if (typeof body !== 'object')
 		return res.status(400).send('The request body must be an object')
 	
-	const { number, text } = body
+	const { text, number } = body
 	
 	if (!(typeof text === 'string' && text))
 		return res.status(400).send('The message text must be a non-empty string')
