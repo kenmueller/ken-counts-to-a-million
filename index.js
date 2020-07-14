@@ -20,7 +20,7 @@ const sendMessage = i =>
 		text: `${i}${i % emojiInterval ? '' : ' 🥳'}`
 	})
 
-;(async () => {
+(async () => {
 	try {
 		for (let i = nextNumber; i <= lastNumber; i++) {
 			process.stdout.write(`${i}...`)
