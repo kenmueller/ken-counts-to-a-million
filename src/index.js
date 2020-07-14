@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const handlebars = require('express-handlebars')
 
 const { sleep, sendMessage } = require('./utils')
-const { LAST_NUMBER, SLEEP_DURATION, PORT } = require('./constants')
+const { PASSWORD, LAST_NUMBER, SLEEP_DURATION, PORT } = require('./constants')
 
 const app = express()
 
@@ -70,7 +70,10 @@ app.post('/messages', ({ body }, res) => {
 	res.send()
 })
 
-app.post('/start/:i', ({ params }, res) => {
+app.post('/start/:i', ({ query, params }, res) => {
+	if (query.pass !== PASSWORD)
+		return res.status(403).send('Incorrect password')
+	
 	const _i = parseInt(params.i)
 	
 	if (isNaN(_i))
@@ -85,7 +88,10 @@ app.post('/start/:i', ({ params }, res) => {
 	start()
 })
 
-app.post('/stop', (_, res) => {
+app.post('/stop', ({ query }, res) => {
+	if (query.pass !== PASSWORD)
+		return res.status(403).send('Incorrect password')
+	
 	ready = false
 	
 	console.log('Stopped')
