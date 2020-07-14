@@ -25,7 +25,6 @@ const start = async () => {
 			i++
 		} catch (error) {
 			console.error(error)
-			continue
 		}
 	}
 }
