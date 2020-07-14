@@ -25,11 +25,7 @@
 			{{/if}}
 		</h2>
 		<div id="forms">
-			<form
-				id="add-message-form"
-				class="message-form"
-				onsubmit="addMessage(event)"
-			>
+			<form class="message-form" onsubmit="addMessage(event)">
 				<h3 class="message-form-title">
 					Add Message to Queue
 				</h3>
@@ -43,6 +39,7 @@
 					<input
 						id="add-message-input"
 						class="message-form-input message-form-main-input"
+						required
 						placeholder="Message"
 						oninput="addMessageInputChanged(event.target.value)"
 					>
@@ -55,28 +52,37 @@
 					</button>
 				</div>
 			</form>
-			<form
-				id="claim-number-form"
-				class="message-form"
-				onsubmit="claimNumber(event)"
-			>
+			<form class="message-form" onsubmit="claimNumber(event)">
 				<h3 class="message-form-title">
 					Claim Number
 				</h3>
-				<h4 class="message-form-subtitle">
+				<h4
+					id="claim-number-subtitle"
+					class="message-form-subtitle"
+				>
 					Your message will be attached to your desired number
 				</h4>
 				<input
+					id="claim-number-number-input"
 					class="message-form-input message-form-secondary-input"
+					required
 					placeholder="Number"
 					type="number"
+					oninput="claimNumberNumberInputChanged(event.target.value)"
 				>
 				<div class="message-form-body">
 					<input
+						id="claim-number-text-input"
 						class="message-form-input message-form-main-input"
+						required
 						placeholder="Message"
+						oninput="claimNumberTextInputChanged(event.target.value)"
 					>
-					<button class="message-form-button" disabled>
+					<button
+						id="claim-number-submit-button"
+						class="message-form-button"
+						disabled
+					>
 						Send
 					</button>
 				</div>

@@ -51,6 +51,9 @@ app.post('/messages', ({ body }, res) => {
 		return res.status(400).send('The message text must be a non-empty string')
 	
 	if (typeof number === 'number') {
+		if (i === null)
+			return res.status(403).send('The current number is unknown')
+		
 		if (number < i)
 			return res.status(403).send(`Ken already passed ${number}`)
 		
