@@ -1,5 +1,8 @@
 {
 	"name": "slack",
+	"scripts": {
+		"start": "node ."
+	},
 	"dependencies": {
 		"@slack/web-api": "^5.10.0"
 	}
