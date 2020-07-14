@@ -21,6 +21,15 @@ body {
 	padding: 30px;
 }
 
+input[type='number'] {
+	-moz-appearance: textfield;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+}
+
 button {
 	cursor: pointer;
 }
@@ -41,7 +50,7 @@ button:disabled {
 
 #status {
 	margin-top: 30px;
-	color: #f3540b;
+	color: #f32e0b;
 }
 
 #status.ready {
@@ -62,9 +71,18 @@ button:disabled {
 	opacity: 0.5;
 }
 
+.message-form-subtitle.error {
+	color: #f32e0b;
+	opacity: 1;
+}
+
+.message-form-body,
+.message-form-secondary-input {
+	margin-top: 16px;
+}
+
 .message-form-body {
 	display: flex;
-	margin-top: 16px;
 }
 
 .message-form-input,
@@ -77,8 +95,6 @@ button:disabled {
 }
 
 .message-form-input {
-	flex-grow: 1;
-	margin-right: 12px;
 	padding: 0 16px;
 	background: #f0f1f81a;
 }
@@ -86,6 +102,15 @@ button:disabled {
 .message-form-input::placeholder {
 	color: white;
 	opacity: 0.5;
+}
+
+.message-form-main-input {
+	flex-grow: 1;
+	margin-right: 12px;
+}
+
+.message-form-secondary-input {
+	width: 115px;
 }
 
 .message-form-button {
