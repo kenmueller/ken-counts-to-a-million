@@ -1,8 +1,10 @@
+const { token } = window
+
 const sendMessage = async (text, number) => {
 	const response = await fetch('/messages', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ text, number })
+		body: JSON.stringify({ text, number, token })
 	})
 	
 	if (response.status !== 200)
@@ -14,11 +16,11 @@ const addMessageInput = document.getElementById('add-message-input')
 const addMessageSubmitButton = document.getElementById('add-message-submit-button')
 
 const addMessage = async event => {
+	event.preventDefault()
+	
+	const text = addMessageInput.value
+	
 	try {
-		event.preventDefault()
-		
-		const text = addMessageInput.value
-		
 		addMessageSubtitle.classList.remove('error')
 		addMessageSubtitle.innerHTML = 'Loading...'
 		
@@ -31,6 +33,9 @@ const addMessage = async event => {
 	} catch (error) {
 		addMessageSubtitle.classList.add('error')
 		addMessageSubtitle.innerHTML = error.message
+		
+		addMessageInput.value = text
+		addMessageSubmitButton.disabled = false
 	}
 }
 
@@ -44,14 +49,16 @@ const claimNumberNumberInput = document.getElementById('claim-number-number-inpu
 const claimNumberSubmitButton = document.getElementById('claim-number-submit-button')
 
 const claimNumber = async event => {
+	event.preventDefault()
+	
+	const text = claimNumberTextInput.value
+	const number = parseInt(claimNumberNumberInput.value)
+	
 	try {
-		event.preventDefault()
-		
-		const text = claimNumberTextInput.value
-		const number = parseInt(claimNumberNumberInput.value)
-		
 		claimNumberTextInput.value = ''
 		claimNumberNumberInput.value = ''
+		
+		claimNumberSubmitButton.disabled = true
 		
 		claimNumberSubtitle.classList.remove('error')
 		claimNumberSubtitle.innerHTML = 'Loading...'
@@ -62,6 +69,11 @@ const claimNumber = async event => {
 	} catch (error) {
 		claimNumberSubtitle.classList.add('error')
 		claimNumberSubtitle.innerHTML = error.message
+		
+		claimNumberTextInput.value = text
+		claimNumberNumberInput.value = number
+		
+		claimNumberSubmitButton.disabled = false
 	}
 }
 
@@ -71,4 +83,9 @@ const claimNumberTextInputChanged = text => {
 
 const claimNumberNumberInputChanged = text => {
 	claimNumberSubmitButton.disabled = !(text && claimNumberTextInput.value)
+}
+
+window.onunload = () => {
+	if (navigator.sendBeacon)
+		navigator.sendBeacon('/invalidate-token', token)
 }

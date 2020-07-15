@@ -4,11 +4,25 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const handlebars = require('express-handlebars')
 
-const { sleep, sendMessage } = require('./utils')
-const { PASSWORD, LAST_NUMBER, SLEEP_DURATION, PORT } = require('./constants')
+const {
+	sleep,
+	sendMessage,
+	createToken,
+	didPassRateLimit
+} = require('./utils')
+
+const {
+	PASSWORD,
+	LAST_NUMBER,
+	SLEEP_DURATION,
+	PORT,
+	MESSAGE_RATE_LIMIT
+} = require('./constants')
 
 const app = express()
+const parseJson = bodyParser.json()
 
+const tokens = {}
 const messages = {}
 const queue = []
 
@@ -30,7 +44,13 @@ const start = async () => {
 }
 
 app.use(cors())
-app.use(bodyParser.json())
+app.use(express.static(join(__dirname, '../public')))
+
+app.use((req, res, next) =>
+	req.url === '/messages'
+		? parseJson(req, res, next)
+		: next()
+)
 
 app.engine('handlebars', handlebars())
 app.set('view engine', 'handlebars')
@@ -39,7 +59,8 @@ app.get('/', (_, res) =>
 	res.render('home', {
 		layout: false,
 		ready,
-		current: i
+		current: i,
+		token: createToken(tokens)
 	})
 )
 
@@ -51,7 +72,20 @@ app.post('/messages', ({ body }, res) => {
 	if (typeof body !== 'object')
 		return res.status(400).send('The request body must be an object')
 	
-	const { text, number } = body
+	const { text, number, token } = body
+	
+	if (typeof token !== 'string')
+		return res.status(400).send('You must send a token')
+	
+	const lastUsed = tokens[token]
+	
+	if (lastUsed === undefined)
+		return res.status(403).send('Invalid token')
+	
+	if (didPassRateLimit(lastUsed))
+		return res
+			.status(403)
+			.send(`You can only post a message every ${MESSAGE_RATE_LIMIT / 1000} seconds`)
 	
 	if (!(typeof text === 'string' && text))
 		return res.status(400).send('The message text must be a non-empty string')
@@ -73,6 +107,7 @@ app.post('/messages', ({ body }, res) => {
 	} else
 		queue.push(text)
 	
+	tokens[token] = Date.now()
 	res.send()
 })
 
@@ -104,6 +139,12 @@ app.post('/stop', ({ query }, res) => {
 	res.send('Stopped counting')
 })
 
-app.use(express.static(join(__dirname, '../public')))
+app.post('/invalidate-token', ({ body: token }, res) => {
+	if (typeof token !== 'string')
+		return res.status(400).send('The request body must be a token')
+	
+	delete tokens[token]
+	res.send()
+})
 
 app.listen(PORT)

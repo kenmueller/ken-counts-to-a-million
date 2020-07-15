@@ -1,6 +1,7 @@
 const { WebClient } = require('@slack/web-api')
+const { v4: uuid } = require('uuid')
 
-const { SLACK_TOKEN, SLACK_CHANNEL } = require('./constants')
+const { SLACK_TOKEN, SLACK_CHANNEL, MESSAGE_RATE_LIMIT } = require('./constants')
 
 const slack = new WebClient(SLACK_TOKEN)
 
@@ -25,4 +26,19 @@ const sendMessage = (i, messages, queue) => {
 	})
 }
 
-module.exports = { sleep, sanitize, sendMessage }
+const createToken = tokens => {
+	const id = uuid()
+	tokens[id] = 0
+	return id
+}
+
+const didPassRateLimit = lastUsed =>
+	(Date.now() - lastUsed) < MESSAGE_RATE_LIMIT
+
+module.exports = {
+	sleep,
+	sanitize,
+	sendMessage,
+	createToken,
+	didPassRateLimit
+}
